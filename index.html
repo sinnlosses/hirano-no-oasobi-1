@@ -22,25 +22,25 @@
         </div>
       </nav>
       
-      <p class="text-center">
+      <p class="text-center"><br>
         できたことをリスト化します。<br>
         今日やったことたちを入力してください。<br>
       </p>
 
-      <form class="form-inline">
-        <div class="text-center">
+      <div class="form-row">
+        <div class="col-10">
           <input id="input_pluralBox" type="text" class="form-control" placeholder="やったことを入力してください">
-          <button onclick="execute()" class="btn btn-primary">登録</button>
         </div>
-      </form>
+        <div class="col-2">
+          <button onclick="execute()" class="btn btn-primary">登録</button>
+        </div>    
+      </div>
 
-      <div class="text-center">
         <ul id="doneList"></ul>
-      </div>
 
-      <div class="text-right" id="output">
-        <button onclick="output()" class="btn btn-primary">テキスト出力</button>
-      </div>
+        <div class="text-center">
+          <button id="output" onclick="output()" class="text-right btn btn-primary">テキスト出力</button>
+        </div>
     </div>
 
     <!-- Optional JavaScript -->

@@ -21,11 +21,8 @@ function execute() {
     button.type = 'button';
     button.classList.add('delete-button');
     button.addEventListener('click', e => {
-        if (e.target == null) {
-            throw TypeError;
-        }
-        const target = e.target;
-        doneList.removeChild(target.closest('li'));
+        const parentElem = e.target.closest("li");
+        doneList.removeChild(parentElem);
     });
     list.appendChild(span);
     list.appendChild(button);
