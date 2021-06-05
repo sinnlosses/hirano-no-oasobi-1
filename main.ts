@@ -1,50 +1,54 @@
 /**
- * 処理を実行する.
+ * 登録処理を実行する.
  */
- function execute():void{
-    const inputText:string = getHtmlInputElementById("inputTextarea").value.trim();
-    const inputRows:string[] = inputText.split("\n");
-    const tableName:string = getHtmlInputElementById("tableName").value;
-    const keyColumn:String = getHtmlInputElementById("keyColumn").value;
-    let outputRows:string[] = new Array(inputRows.length);
+ function execute(){
+    const textInput:HTMLInputElement = getHtmlInputElementById("input_pluralBox");
+    const doneList:HTMLInputElement= getHtmlInputElementById("doneList");
+    const text:string = textInput.value.trim()
 
-    for (let i = 0; i < inputRows.length; i++){
-        const splitedRows:string[] = identifySplitCharacter(inputRows[i]);
-        const englishName:string = splitedRows[0].trim();
-        const typeName:string = splitedRows[1].trim();
-        const length:number = Number(splitedRows[2].trim());
-        const keyColumnValue:String = splitedRows[3].trim();
-
-        //データ定義が数値型、日付型の場合は処理しない
-        if(["int" , "numeric" , "datetime" ].includes(typeName)){
-            continue
-        }
-        //長さの定義がない場合と1の場合は飛ばす
-        else if([" " , "" , "1"].includes(length.toString())){
-            continue
-        }
-        //長さの定義が8以上の場合、改行の制御コードを入れたデータをSETするUPDATE文を作成する
-        else if(length >= 8){
-            outputRows[i] = "UPDATE " + tableName + "\nSET " + englishName + " = 'sei' + CHAR(13) + CHAR(10) + 'gyo' " + "\nWHERE " + keyColumn + " = " + keyColumnValue
-            continue
-        }
-        //長さの定義が8より小さい場合、タブの制御コードを入れたデータをSETするUPDATE文を作成する
-        else if (length > 2 && length < 8){
-            outputRows[i] = "UPDATE " + tableName + "\nSET " + englishName + " = 's' + CHAR(9) + 'g' " + "\nWHERE " + keyColumn + " = " + keyColumnValue
-            continue
-        }
-        else if(length == 2){
-            outputRows[i] = "UPDATE " + tableName + "\nSET " + englishName + " = CHAR(9) + 's' " + "\nWHERE " + keyColumn + " = " + keyColumnValue
-        }
+    // 何も入力されていない場合、処理しない
+    if (text == '') {
+        return;
     }
+
+    // 入力がある場合、リストに追加して画面に出力して入力値を空にする.
+    const list = document.createElement('li');
+    const span = document.createElement('span');
+    const button = document.createElement('button');
     
-    outputRows = outputRows.filter(function(value){
-        return value != "";
+    list.classList.add('list-item');
+    span.textContent = text;
+    span.classList.add('done-text');
+
+    button.textContent = '削除';
+    button.type = 'button';
+    button.classList.add('delete-button');
+    button.addEventListener ('click', e => {
+        if (e.target == null){
+            throw TypeError;
+        }
+        const target = e.target as HTMLElement;
+        doneList.removeChild(target.closest('li'));
     });
 
-    let outputTextarea:HTMLInputElement = <HTMLInputElement>document.getElementById("outputTextarea");
-    outputTextarea.value = outputRows.join("\n\n");
-}
+    list.appendChild(span);
+    list.appendChild(button);
+    doneList.appendChild(list);
+
+    textInput.value = '';
+ }
+
+
+
+
+/**
+ * テキスト出力処理を実行する.
+ */
+ function ouput():void{
+
+ }
+
+
 
 /**
  * 指定したIDを持つエレメントを返す.

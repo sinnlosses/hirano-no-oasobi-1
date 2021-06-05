@@ -1,0 +1,12 @@
+{
+  "name": "hirano-no-oasobi-1",
+  "version": "1.0.0",
+  "private": true,
+  "description": "平野のお遊び",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc -w"
+  }
+}
