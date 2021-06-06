@@ -12,19 +12,23 @@ function execute() {
     }
     // 入力がある場合、リストに追加して画面に出力して入力値を空にする.
     const list = document.createElement('li');
-    const span = document.createElement('span');
+    const done = document.createElement('done');
+    const admire = document.createElement('admire');
     const button = document.createElement('button');
     list.classList.add('list-item');
-    span.textContent = text;
-    span.classList.add('done-text');
-    button.textContent = '削除';
+    done.classList.add('done-text');
+    done.textContent = text;
+    button.className = "btn btn-primary text-center";
+    button.textContent = '褒め';
     button.type = 'button';
-    button.classList.add('delete-button');
+    button.classList.add('admire-button');
     button.addEventListener('click', e => {
-        const parentElem = e.target.closest("li");
-        doneList.removeChild(parentElem);
+        admire.className = "text-danger";
+        admire.classList.add('admire');
+        admire.textContent = "褒め";
     });
-    list.appendChild(span);
+    list.appendChild(done);
+    list.appendChild(admire);
     list.appendChild(button);
     doneList.appendChild(list);
     textInput.value = '';
