@@ -28,18 +28,21 @@
     button.textContent = '褒め';
     button.type = 'button';
     button.classList.add('admire-button');
+
+    list.appendChild(done);
+    list.appendChild(button);
+    doneList.appendChild(list);
+
     button.addEventListener ('click', e => {
-        admire.className = "flex flex2 text-danger";
+        admire.className = "alert alertalert-primary";
         admire.classList.add('admire');
         admire.textContent = "褒め"
+        list.removeChild(button);
 
-       
+        list.appendChild(admire); 
 });
-    list.appendChild(done);
-    list.appendChild(admire);
-    list.appendChild(button);
 
-    doneList.appendChild(list);
+    
 
     textInput.value = '';
  }

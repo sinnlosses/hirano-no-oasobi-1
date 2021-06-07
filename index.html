@@ -16,9 +16,9 @@
   <body>
 
     <div class="container">
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-md navbar-dark">
         <div class="mx-auto order-0">
-          <a class="navbar-brand mx-auto" href="#">Doneリスト</a>
+          <a class="text-dark navbar-brand mx-auto" href="#">Doneリスト</a>
         </div>
       </nav>
       
@@ -27,13 +27,14 @@
         今日やったことたちを入力してください。<br>
       </p>
 
-      <div class="form-row mergin-center">
-        <div class="col-10">
+      <div class="form-row text-center">
+        <div class="form-group col-md-10">
           <input id="input_pluralBox" type="text" class="form-control" placeholder="やったことを入力してください">
         </div>
-        <div class="col-2">
-          <button onclick="execute()" class="btn btn-primary">登録</button>
-        </div>    
+
+        <div class="form-group col-md-2">
+          <button onclick="execute()" class="btn btn-primary ">登録する</button>
+        </div>
       </div>
 
       <br><ul id="doneList"></ul>
