@@ -10,29 +10,9 @@ function execute() {
     if (text == '') {
         return;
     }
-    // 入力がある場合、リストに追加して画面に出力して入力値を空にする.
-    const list = document.createElement('li');
-    const done = document.createElement('done');
-    const admire = document.createElement('admire');
-    const button = document.createElement('button');
-    list.classList.add('list-item');
-    done.classList.add('done-text');
-    done.textContent = text;
-    button.className = "btn btn-primary";
-    button.textContent = '褒め';
-    button.type = 'button';
-    button.classList.add('admire-button');
-    list.appendChild(done);
-    list.appendChild(button);
-    doneList.appendChild(list);
-    button.addEventListener('click', e => {
-        admire.className = "alert alertalert-primary";
-        admire.classList.add('admire');
-        admire.textContent = "褒め";
-        list.removeChild(button);
-        list.appendChild(admire);
-    });
-    textInput.value = '';
+    else {
+        addList(text, doneList, textInput);
+    }
 }
 /**
  * テキスト出力処理を実行する.
@@ -46,11 +26,35 @@ function ouput() {
 function getHtmlInputElementById(id) {
     return document.getElementById(id);
 }
-function identifySplitCharacter(inputRow) {
-    if (inputRow.split("\t").length >= 2) {
-        return inputRow.split("\t");
-    }
-    else {
-        return inputRow.split(" ");
-    }
+/**
+ * 入力がある場合、リストに追加して画面に出力して入力値を空にする.
+ * @param text 入力された文字列
+ */
+function addList(text, doneList, textInput) {
+    // 要素作成
+    const list = document.createElement('li');
+    const done = document.createElement('done');
+    const admire = document.createElement('admire');
+    const button = document.createElement('button');
+    list.classList.add('list-item');
+    done.classList.add('done-text');
+    done.textContent = text;
+    // ボタン作成
+    button.className = "btn btn-primary";
+    button.textContent = '褒め';
+    button.type = 'button';
+    button.classList.add('admire-button');
+    // リスト追加
+    list.appendChild(done);
+    list.appendChild(button);
+    doneList.appendChild(list);
+    // ボタン押下時の処理
+    button.addEventListener('click', e => {
+        admire.className = "alert alertalert-primary";
+        admire.classList.add('admire');
+        admire.textContent = "褒め";
+        list.removeChild(button);
+        list.appendChild(admire);
+    });
+    textInput.value = '';
 }
