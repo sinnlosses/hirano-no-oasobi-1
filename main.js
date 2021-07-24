@@ -17,7 +17,25 @@ function execute() {
 /**
  * テキスト出力処理を実行する.
  */
-function ouput() {
+function output() {
+    var string = 'ダウンロードできたかな？';
+    var title = 'TEST.txt';
+    var blobType = 'text/plain';
+    var linkTagId = 'output';
+    var linkTag = document.getElementById(linkTagId);
+    var linkTagAttr = ['href', 'download'];
+    var msSave = window.navigator;
+    var stringObject = new Blob([string], { type: blobType });
+    var objectURL = window.URL.createObjectURL(stringObject);
+    var UA = window.navigator.userAgent.toLowerCase();
+    if (UA.indexOf('msie') != -1 || UA.indexOf('trident') != -1) {
+        // IEの時はmsSaveOrOpenBlobかmsSaveBlobを利用します。
+        window.navigator.msSaveOrOpenBlob(stringObject, title);
+    }
+    else {
+        linkTag.setAttribute(linkTagAttr[0], objectURL);
+        linkTag.setAttribute(linkTagAttr[1], title);
+    }
 }
 /**
  * 指定したIDを持つエレメントを返す.
