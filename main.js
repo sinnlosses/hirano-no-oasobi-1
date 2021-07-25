@@ -4,28 +4,34 @@
  */
 function execute() {
     const textInput = getHtmlInputElementById("input_pluralBox");
-    const doneList = getHtmlInputElementById("doneList");
+    var doneList = getHtmlInputElementById("doneList");
     const text = textInput.value.trim();
+    const output = getHtmlInputElementById("output");
+    var doneLists = '';
     // 何も入力されていない場合、処理しない
     if (text == '') {
         return;
     }
     else {
-        addList(text, doneList, textInput);
+        doneLists = addList(text, doneList, textInput);
+        output.addEventListener('click', e => {
+            outputFile(doneLists);
+        });
     }
 }
 /**
  * テキスト出力処理を実行する.
  */
-function output() {
-    var string = 'ダウンロードできたかな？';
-    var title = 'TEST.txt';
-    var blobType = 'text/plain';
-    var linkTagId = 'output';
-    var linkTag = document.getElementById(linkTagId);
-    var linkTagAttr = ['href', 'download'];
+function outputFile(doneLists) {
+    const doneList = getHtmlInputElementById("doneList");
+    const content = doneLists;
+    const title = 'TEST.txt';
+    const blobType = 'text/plain';
+    const linkTagId = 'output';
+    const linkTag = document.getElementById(linkTagId);
+    const linkTagAttr = ['href', 'download'];
     var msSave = window.navigator;
-    var stringObject = new Blob([string], { type: blobType });
+    var stringObject = new Blob([content], { type: blobType });
     var objectURL = window.URL.createObjectURL(stringObject);
     var UA = window.navigator.userAgent.toLowerCase();
     if (UA.indexOf('msie') != -1 || UA.indexOf('trident') != -1) {
@@ -75,4 +81,15 @@ function addList(text, doneList, textInput) {
         list.appendChild(admire);
     });
     textInput.value = '';
+    const doneLists = doneList.value;
+    return doneLists;
+}
+/**
+ * リストの中身をファイル出力の形式にする.
+ * @param doneLists リストの中身
+ */
+function makeContent(doneLists) {
+    var content = 'TEST';
+    content = content + '\t' + doneLists;
+    return content;
 }

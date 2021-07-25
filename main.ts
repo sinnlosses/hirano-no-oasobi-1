@@ -3,47 +3,56 @@
  */
  function execute(){
     const textInput:HTMLInputElement = getHtmlInputElementById("input_pluralBox");
-    const doneList:HTMLInputElement= getHtmlInputElementById("doneList");
-    const text:string = textInput.value.trim()
+    var doneList:HTMLInputElement= getHtmlInputElementById("doneList");
+    const text:string = textInput.value.trim();
+    const output:HTMLInputElement = getHtmlInputElementById("output");
+    var doneLists:string = '';
+
 
     // 何も入力されていない場合、処理しない
     if (text == '') {
         return;
     }
     else{
-        addList(text,doneList,textInput);
+        doneLists = addList(text,doneList,textInput);
+        output.addEventListener ('click', e => {
+            outputFile(doneLists);
+    
+        });
     }
+
  }
 
 /**
  * テキスト出力処理を実行する.
  */
- function output(){
-    var string = 'ダウンロードできたかな？';
-    var title = 'TEST.txt';
-    var blobType = 'text/plain';
 
-    var linkTagId = 'output';
-    var linkTag = <HTMLInputElement>document.getElementById(linkTagId);
-    var linkTagAttr =  ['href','download'];
+ function outputFile(doneLists:string){
+    const doneList:HTMLInputElement= getHtmlInputElementById("doneList");
+    const content:string = doneLists
+
+    const title:string = 'TEST.txt';
+    const blobType:string = 'text/plain';
+
+    const linkTagId:string = 'output';
+    const linkTag:HTMLInputElement = <HTMLInputElement>document.getElementById(linkTagId);
+    const linkTagAttr:Array<string> =  ['href','download'];
     
     var msSave = window.navigator;
    
-    var stringObject = new Blob([string], { type: blobType });
+    var stringObject = new Blob([content], { type: blobType });
     var objectURL = window.URL.createObjectURL(stringObject);  
-    
-    
    
     var UA = window.navigator.userAgent.toLowerCase();
 
-     if(UA.indexOf('msie') != -1 || UA.indexOf('trident') != -1) {
-                // IEの時はmsSaveOrOpenBlobかmsSaveBlobを利用します。
+    if(UA.indexOf('msie') != -1 || UA.indexOf('trident') != -1) {
+    // IEの時はmsSaveOrOpenBlobかmsSaveBlobを利用します。
     window.navigator.msSaveOrOpenBlob(stringObject, title); 
-    } else {
+    }
+    else {  
     linkTag.setAttribute(linkTagAttr[0],objectURL);
     linkTag.setAttribute(linkTagAttr[1],title); 
-  }
-    
+    }
  }
 
 /**
@@ -69,7 +78,6 @@ function addList(text:string,doneList:HTMLInputElement,textInput:HTMLInputElemen
     done.classList.add('done-text');
     done.textContent = text;
     
-    
     // ボタン作成
     button.className = "btn btn-primary";
     button.textContent = '褒め';
@@ -90,5 +98,19 @@ function addList(text:string,doneList:HTMLInputElement,textInput:HTMLInputElemen
         list.appendChild(admire); 
     });
     textInput.value = '';
+    const doneLists:string = doneList.value;
+    return doneLists;
 }
+
+/**
+ * リストの中身をファイル出力の形式にする.
+ * @param doneLists リストの中身
+ */
+ function makeContent(doneLists:string):string{
+    var content:string = 'TEST'
+    content = content + '\t'+ doneLists;
+    
+     
+    return content;
+ }
 
